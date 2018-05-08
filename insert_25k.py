@@ -1,23 +1,14 @@
-
-
-# DELETE _search
-# {
-#   "query": {
-#     "match_all":{}
-#   }
-# }
-
 def insert_25_elastic(folder, myindex):
     import glob, json
     from elasticsearch import Elasticsearch
-    print("reading json")
+    #print("reading json")
 
     try: 
         with open("%s.json" % folder) as c:
             myjson = c.readlines()
     except:
         myfiles = glob.glob("/aps/aps_get/json/%s/*.json" % folder)
-
+        print(folder)
         myjson = []
         for f in myfiles:                                                
            with open(f) as j:
@@ -31,7 +22,7 @@ def insert_25_elastic(folder, myindex):
         #       c.write("\n")
         #c.close() 
 
-    print("parsing json")
+    #print("parsing json")
 
     bulk_data = []
 
@@ -47,10 +38,10 @@ def insert_25_elastic(folder, myindex):
         bulk_data.append(op_dict)
         bulk_data.append(data_dict)
 
-    #print(bulk_data[0])
+    #print(len(bulk_data))
 
     es = Elasticsearch('localhost')
-
+    """
     if es.indices.exists(myindex):
         print("deleting '%s' index..." % (myindex))
         res = es.indices.delete(index = myindex )
@@ -65,8 +56,9 @@ def insert_25_elastic(folder, myindex):
 
     res = es.indices.create(index=myindex, body = request_body)
     print(" response: '%s'" % (res))
+    """
 
-    print("bulk indexing...")
+    #print("bulk indexing...")
 
     buffer = []
     for e, b in enumerate(bulk_data):
