@@ -32,4 +32,4 @@ if __name__ == '__main__':
 
     for e, f in enumerate(folders[:46]):
         print(e, "out of ", len(folders))
-        prep_25_elastic(folder)
+        prep_25_elastic(f)
