@@ -41,24 +41,22 @@ def insert_25_elastic(folder, myindex):
     #print(len(bulk_data))
 
     es = Elasticsearch('localhost')
-    """
-    if es.indices.exists(myindex):
-        print("deleting '%s' index..." % (myindex))
-        res = es.indices.delete(index = myindex )
-        print(" response: '%s'" % (res))
-
     request_body = {
         "settings" : {
             "number_of_shards": 1,
             "number_of_replicas": 0
         }
-    }
+    }   
+    if es.indices.exists(myindex):
+        pass
+        #print("deleting '%s' index..." % (myindex))
+        #res = es.indices.delete(index = myindex )
+        #print(" response: '%s'" % (res))
+    else:
+        res = es.indices.create(index=myindex, body = request_body)
+        print(" response: '%s'" % (res))
 
-    res = es.indices.create(index=myindex, body = request_body)
-    print(" response: '%s'" % (res))
-    """
-
-    #print("bulk indexing...")
+    print("bulk indexing...")
 
     buffer = []
     for e, b in enumerate(bulk_data):

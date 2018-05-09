@@ -5,10 +5,11 @@ folders = []
 for root, dirs, files in os.walk("/aps/aps_get/json"):
     folders.extend(dirs)
     break
-print(len(folders))
 
-for f in folders[:46]:
+
+for e, f in enumerate(folders):
     myindex = "documents"
-    #print(f)
-    insert_25_elastic(f, myindex)
+    print(e, "out of ", len(folders))
+    if e > 16:
+        insert_25_elastic(f, myindex)
 
