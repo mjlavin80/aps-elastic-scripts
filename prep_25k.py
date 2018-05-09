@@ -31,5 +31,5 @@ if __name__ == '__main__':
         break
 
     for e, f in enumerate(folders[:46]):
-        print(e, "out of ", len(folders))
+        print(e, "out of ", len(folders[:46]))
         prep_25_elastic(f)
