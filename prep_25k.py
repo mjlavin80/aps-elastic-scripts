@@ -1,4 +1,4 @@
-import glob, json
+import glob, json, os
 from elasticsearch import Elasticsearch
 
 def prep_25_elastic(folder):
@@ -30,6 +30,6 @@ if __name__ == '__main__':
         folders.extend(dirs)
         break
 
-    for e, f in enumerate(folders)[:46]:
+    for e, f in enumerate(folders[:46]):
         print(e, "out of ", len(folders))
         prep_25_elastic(folder)
