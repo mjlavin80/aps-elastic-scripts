@@ -27,7 +27,7 @@ for i in myjson:
 missing_chunks = []
 for z in range(0, len(bulk_ids), 1000):
     try:
-        res = es.get(index="documents", doc_type='article', _id=z)
+        res = es.get(index="documents", doc_type='article', _id=bulk_ids[z])
     except:
         missing_chunks.append(z)
 
