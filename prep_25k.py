@@ -30,6 +30,6 @@ if __name__ == '__main__':
         folders.extend(dirs)
         break
 
-    for e, f in enumerate(folders[:46]):
-        print(e, "out of ", len(folders[:46]))
+    for e, f in enumerate(folders[400:]):
+        print(e+401, "out of ", len(folders[400:]))
         prep_25_elastic(f)

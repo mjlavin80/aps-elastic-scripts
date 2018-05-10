@@ -7,8 +7,8 @@ def insert_25_elastic(folder, myindex):
         with open("%s.json" % folder) as c:
             myjson = c.readlines()
     except:
+        print("No bulk file found for %s" % folder)
         myfiles = glob.glob("/aps/aps_get/json/%s/*.json" % folder)
-        print(folder)
         myjson = []
         for f in myfiles:                                                
            with open(f) as j:
@@ -40,7 +40,7 @@ def insert_25_elastic(folder, myindex):
 
     #print(len(bulk_data))
 
-    es = Elasticsearch('localhost')
+    es = Elasticsearch('localhost', timeout=30, max_retries=10, retry_on_timeout=True)
     request_body = {
         "settings" : {
             "number_of_shards": 1,
