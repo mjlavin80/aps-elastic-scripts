@@ -32,9 +32,9 @@ for a, f in enumerate(folders):
             res = es.get(index="documents", doc_type='article', id=z)
         except:
             missing_chunks.append(z)
-    data.append((f, len(bulk_ids), ",".join(bulk_ids)))
+    data.append((f, len(missing_chunks), ",".join(missing_chunks)))
 
 with open("elastic_counts.csv", "a") as e:
     for d in data:
-        e.write("".join([l[0], ',', l[1], ',', l[2], '\n']))
+        e.write("".join([str(d[0]), ',', str(d[1]), ',', str(d[2]), '\n']))
 e.close()        
