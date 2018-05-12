@@ -12,7 +12,7 @@ for root, dirs, files in os.walk("/aps/aps_get/json"):
 
 #open bulk file for folder no. 262
 
-with open("%s.json" % folders[262]) as c:
+with open("%s.json" % folders[263]) as c:
     myjson = c.readlines()
 
 bulk_ids = []
@@ -25,10 +25,10 @@ for i in myjson:
 # loop and query by 0, 999, 1999, etc
 
 missing_chunks = []
-for z in range(0, len(bulk_ids), 1000):
+for z in bulk_ids:
     try:
-        res = es.get(index="documents", doc_type='article', _id=bulk_ids[z])
+        res = es.get(index="documents", doc_type='article', id=z)
     except:
         missing_chunks.append(z)
 
-print(missing_chunks)        
+print(len(missing_chunks))        
