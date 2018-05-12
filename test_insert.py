@@ -13,7 +13,7 @@ for root, dirs, files in os.walk("/aps/aps_get/json"):
 data = []
 #loop bulk folders
 for a, f in enumerate(folders):
-    print(" ".join([a+1, "out of", len(folders)]))
+    print(" ".join([str(a+1), "out of", len(folders)]))
     with open("%s.json" % f) as c:
         myjson = c.readlines()
 
