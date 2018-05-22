@@ -2,9 +2,7 @@ from elasticsearch_dsl.connections import connections
 from elasticsearch_dsl import Search
 from elasticsearch import Elasticsearch
 
-es = Elasticsearch('localhost', timeout=60, max_retries=10, retry_on_timeout=True)
-
-client = connections.create_connection(hosts=['http://localhost:9200'])
+client = connections.create_connection(hosts=['http://localhost:9200'], timeout=60, max_retries=10, retry_on_timeout=True)
 
 s = Search(using=client, index="documents", doc_type="article")
 
@@ -14,7 +12,7 @@ body = {
     "aggs": {
         "by_subject": {
             "terms": {
-                "field": "SourceType.keywords",
+                "field": "SourceType",
                 "size": 10
             }
         }
