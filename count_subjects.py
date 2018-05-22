@@ -26,4 +26,4 @@ body = s.to_dict()
 
 t = s.execute()
 
-print(t)
+print(t.to_dict())
