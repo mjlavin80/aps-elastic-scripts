@@ -13,10 +13,12 @@ body = {
     "size": 0,
     "aggs": {
         "by_subject": {
-            "field": "SourceType"
+            "terms": {
+                "field": "SourceType"
             }
         }
     }
+}
 
 s = s.from_dict(body)
 body = s.to_dict()
