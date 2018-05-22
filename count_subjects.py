@@ -15,6 +15,7 @@ body = {
         "by_subject": {
             "terms": {
                 "field": "SourceType"
+                "size": 10
             }
         }
     }
