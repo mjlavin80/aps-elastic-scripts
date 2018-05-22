@@ -14,7 +14,7 @@ body = {
     "aggs": {
         "by_subject": {
             "terms": {
-                "field": "PublicationID"
+                "field": "SourceType"
             }
         }
     }
