@@ -19,7 +19,8 @@ body = {
         "aggs": {
         "by_pub": {
             "terms": {
-                "field": "Publication.PublicationID"
+                "field": "Publication.PublicationID",
+                "size": 99999
             }
         }
     }
