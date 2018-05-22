@@ -25,6 +25,6 @@ body = s.to_dict()
 
 t = s.execute()
 
-print(t.to_dict())
-#print(pd.DataFrame(t.to_dict()))
+df = pd.DataFrame(t.to_dict()['aggregations']['by_subject']['buckets'])
+df.to_csv('sourceTypes.csv')
     
