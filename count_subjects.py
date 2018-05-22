@@ -25,5 +25,6 @@ body = s.to_dict()
 
 t = s.execute()
 
-print(pd.DataFrame(t.to_dict()))
+print(t.to_dict())
+#print(pd.DataFrame(t.to_dict()))
     
