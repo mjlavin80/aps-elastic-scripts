@@ -1,6 +1,7 @@
 from elasticsearch_dsl.connections import connections
 from elasticsearch_dsl import Search
 from elasticsearch import Elasticsearch
+import pandas as pd
 
 client = connections.create_connection(hosts=['http://localhost:9200'], timeout=60, max_retries=10, retry_on_timeout=True)
 
@@ -24,4 +25,5 @@ body = s.to_dict()
 
 t = s.execute()
 
-print(t.to_dict())
+print(pd.DataFrame(t.to_dict())
+    
