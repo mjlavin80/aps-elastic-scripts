@@ -33,10 +33,13 @@ body = s.to_dict()
 
 t = s.execute()
 
-#df = pd.DataFrame(t.to_dict()['aggregations']['by_subject']['buckets'])
+df = pd.DataFrame(t.to_dict()['aggregations']['by_subject']['buckets'])
+print(df)
 #df.to_csv('sourceTypes.csv')
-    
+
+"""    
 for i in t.to_dict()['aggregations']['by_source']['buckets']:
     df = pd.DataFrame(i['by_pub']['buckets'])
     df.to_csv(i['key']+'.csv')
     print(i['key'])
+"""
