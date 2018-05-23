@@ -17,29 +17,38 @@ body = {
                 "size": 100
             },
         "aggs": {
-        "by_pub": {
+        "by_obj": {
+            "terms": {
+                "field": "ObjectType",
+                "size": 99999
+            },
+         "aggs": {
+         "by_pub": {
             "terms": {
                 "field": "Publication.PublicationID",
                 "size": 99999
+                }
+              }
             }
+          }
         }
+      }
     }
   }
-}
-}
 
 s = s.from_dict(body)
 body = s.to_dict()
 
 t = s.execute()
 
-df = pd.DataFrame(t.to_dict()['aggregations']['by_subject']['buckets'])
-print(df)
-#df.to_csv('sourceTypes.csv')
-
-"""    
+    
 for i in t.to_dict()['aggregations']['by_source']['buckets']:
-    df = pd.DataFrame(i['by_pub']['buckets'])
-    df.to_csv(i['key']+'.csv')
-    print(i['key'])
-"""
+    sourceType = i['key']
+    docCount = i['doc_count']
+    for j in i['by_obj']['buckets']:
+        objectType = j['key']
+        objectCount = j['doc_count']
+        df = pd.DataFrame(j['by_pub']['buckets'], columns=["key", "doc_count"]) 
+        df['objectType'] = objectType
+        df['sourceType'] = sourceType
+print(df)
