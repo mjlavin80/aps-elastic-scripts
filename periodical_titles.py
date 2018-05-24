@@ -35,15 +35,26 @@ for i in rows[:1]:
         }
     s = s.from_dict(body)
     t = s.execute()
-    print(t.to_dict()['hits']['hits'][0])
+    
     #processing dict, title is key
     titles_dict = {}
+    
     #loop articles to look for title and qualifier
+    for hit in t.to_dict()['hits']['hits']:
+        pubdate = hit['_source']['NumericPubDate']
+        qual = hit['_source']['Publication']['Qualifier']
+        text_title = hit['_source']['Publication']['Title']
+        text_title_qual = text_title + "#####" + qual
     	#has title been seen before?
-    	#try:
-    		#title = titles_dict[]
-    	#if not add (with date)
-    	#if so if date earliest or latest, update
-    	#has qualifier been seen before?
-    	# if not add (with date)
-    	#if so if date earliest or latest, update
+    	try:
+            #if so check date, if earliest or latest, update
+            if pubdate < titles_dict[text_title_qual]['first']:
+                titles_dict[text_title_qual]['first'] = pubdate
+            if pubdate > titles_dict[text_title_qual]['last']:
+                titles_dict[text_title_qual]['last'] = pudate                
+    	except:
+            #if not, add (with dates)
+            titles_dict[text_title_qual] = {}
+    	    titles_dict[text_title_qual]['first'] = pubdate
+            titles_dict[text_title_qual]['last'] = pudate
+    print(titles_dict.keys())
