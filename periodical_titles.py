@@ -10,7 +10,8 @@ c = conn.cursor()
 
 #create table if not exists periodical_meta
 create_query = "CREATE TABLE IF NOT EXISTS periodical_meta (_id integer primary key autoincrement, \
-periodical_id integer, title text, qualifier text, )"
+periodical_id integer, title text, qualifier text, FOREIGN KEY(periodical_id) REFERENCES periodical_counts(_id))"
+
 c.execute(create_query)
 
 #get list of periodical ids from sqlite
@@ -21,20 +22,20 @@ rows = c.execute(periodical_ids_query).fetchall()
 client = connections.create_connection(hosts=['http://localhost:9200'], timeout=60, max_retries=10, retry_on_timeout=True)
 s = Search(using=client, index="documents", doc_type="article")
 
-for i in rows:
+for i in rows[:1]:
     #get all articles by id
     #CURL code here
-	body = {
+    body = {
         "_source": ["Publication.Title", "Publication.Qualifier", "NumericPubDate"],
         "query": {
             "match": {
-                "Publication.PublicationID": "266687"
+                "Publication.PublicationID": i[1]
                 }
             }
         }
     s = s.from_dict(body)
     t = s.execute()
-    print(t['hits'].keys())
+    print(t.to_dict()['hits']['hits'][0])
     #processing dict, title is key
     titles_dict = {}
     #loop articles to look for title and qualifier
