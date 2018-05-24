@@ -51,10 +51,10 @@ for i in rows[:1]:
             if pubdate < titles_dict[text_title_qual]['first']:
                 titles_dict[text_title_qual]['first'] = pubdate
             if pubdate > titles_dict[text_title_qual]['last']:
-                titles_dict[text_title_qual]['last'] = pudate                
+                titles_dict[text_title_qual]['last'] = pubdate                
     	except:
             #if not, add (with dates)
             titles_dict[text_title_qual] = {}
     	    titles_dict[text_title_qual]['first'] = pubdate
-            titles_dict[text_title_qual]['last'] = pudate
+            titles_dict[text_title_qual]['last'] = pubdate
     print(titles_dict.keys())
