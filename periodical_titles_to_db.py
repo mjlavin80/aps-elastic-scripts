@@ -15,7 +15,7 @@ periodical_id integer, aps_id integer, title text, qualifier text, FOREIGN KEY(p
 c.execute(create_query)
 
 #get list of periodical ids from sqlite
-periodical_ids_query = "SELECT _id, periodical_id from periodical_counts GROUP BY periodical_id ORDER BY periodical_id ASC"
+periodical_ids_query = "SELECT _id, aps_id from periodical_counts GROUP BY aps_id ORDER BY aps_id ASC"
 rows = c.execute(periodical_ids_query).fetchall()
 
 #set up elastic connection
