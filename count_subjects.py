@@ -67,8 +67,13 @@ for i in t.to_dict()['aggregations']['by_source']['buckets']:
         c.execute(insert_object, (objectType, objectCount))
         conn.commit()
         df = pd.DataFrame(j['by_pub']['buckets'], columns=["key", "doc_count"]) 
-        df['objectType'] = objectType
-        df['sourceType'] = sourceType
-        df = df.rename(columns = {"key", "periodical_id"})
-        df.to_sql('periodical_counts', con=conn)
+        
+        #get source and objects ids from db, then add to df
+	objectType_id = c.execute("SELECT _id FROM object_type_counts WHERE object_type=?", (objectType,)).fetchone()[0]
+        df['object_id'] = objectType_id
+        sourceType_id = c.execute("SELECT _id FROM source_type_counts WHERE source_type=?", (sourceType,)).fetchone()[0]
+        df['source_id'] = sourceType_id
+        
+        df = df.rename(columns = {"key":"periodical_id"})
+        df.to_sql('periodical_counts', con=conn, if_exists='append', index=False)
         conn.commit()
