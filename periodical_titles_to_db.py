@@ -41,6 +41,6 @@ for i in rows:
     
     qual = first_hit['_source']['Publication']['Qualifier']
     text_title = first_hit['_source']['Publication']['Title']
-    insert_statement = "INSERT INTO periodical_meta (_id, periodical_id, aps_id, title, qualifier) VALUES (null, ?, ?, ?)"
+    insert_statement = "INSERT INTO periodical_meta (_id, periodical_id, aps_id, title, qualifier) VALUES (null, ?, ?, ?, ?)"
     c.execute(insert_statement, (i[0], i[1], text_title, qual))
     conn.commit()
