@@ -22,7 +22,7 @@ rows = c.execute(periodical_ids_query).fetchall()
 client = connections.create_connection(hosts=['http://localhost:9200'], timeout=60, max_retries=10, retry_on_timeout=True)
 s = Search(using=client, index="documents", doc_type="article")
 
-for i in rows[:1]:
+for i in rows:
     #get all articles by id
     #CURL code here
     body = {
@@ -57,4 +57,4 @@ for i in rows[:1]:
             titles_dict[text_title_qual] = {}
     	    titles_dict[text_title_qual]['first'] = pubdate
             titles_dict[text_title_qual]['last'] = pubdate
-    print(titles_dict.keys())
+    print(len(titles_dict.keys()))
