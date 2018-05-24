@@ -55,7 +55,7 @@ body = s.to_dict()
 t = s.execute()
 
 insert_source = "INSERT INTO source_type_counts (_id, source_type, doc_count) VALUES (null, ?,?)"
-insert_object = "INSERT INTO object_type_counts (_id, object_type, doc_count, source_id) VALUES (null, ?,?)"
+insert_object = "INSERT INTO object_type_counts (_id, object_type, doc_count, source_id) VALUES (null,?,?,?)"
     
 for i in t.to_dict()['aggregations']['by_source']['buckets']:
     sourceType = i['key']
@@ -71,7 +71,7 @@ for i in t.to_dict()['aggregations']['by_source']['buckets']:
         df = pd.DataFrame(j['by_pub']['buckets'], columns=["key", "doc_count"]) 
         
         #get source and objects ids from db, then add to df
-	    objectType_id = c.execute("SELECT _id FROM object_type_counts WHERE object_type=?", (objectType,)).fetchone()[0]
+	objectType_id = c.execute("SELECT _id FROM object_type_counts WHERE object_type=?", (objectType,)).fetchone()[0]
         df['object_id'] = objectType_id    
         df['source_id'] = sourceType_id
         
