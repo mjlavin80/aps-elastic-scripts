@@ -6,19 +6,14 @@ import sqlite3
 
 conn = sqlite3.connect('datastore.db')
 c = conn.cursor()
-create_statement = """
-CREATE TABLE IF NOT EXISTS source_type_counts 
-(_id integer primary key autoincrement, source_type text, doc_count integer);
-CREATE TABLE IF NOT EXISTS object_type_counts 
-(_id integer primary key autoincrement, object_type text, doc_count integer);
-CREATE TABLE IF NOT EXISTS periodical_counts 
-(_id integer primary key autoincrement, periodical_id, doc_count integer, source_id integer, object_id integer, 
-FOREIGN KEY(source_id) REFERENCES source_type_counts(_id), 
-FOREIGN KEY(object_id) REFERENCES object_type_counts(_id));
-"""
+create_statements = ["CREATE TABLE IF NOT EXISTS source_type_counts (_id integer primary key autoincrement, source_type text, doc_count integer)",
+"CREATE TABLE IF NOT EXISTS object_type_counts (_id integer primary key autoincrement, object_type text, doc_count integer);",
+"CREATE TABLE IF NOT EXISTS periodical_counts (_id integer primary key autoincrement, periodical_id, doc_count integer, source_id integer, object_id integer, \
+FOREIGN KEY(source_id) REFERENCES source_type_counts(_id), FOREIGN KEY(object_id) REFERENCES object_type_counts(_id))"]
 
-c.execute(create_statement)
-conn.commit()
+for u in create_statements:
+    c.execute(u)
+    conn.commit()
 
 client = connections.create_connection(hosts=['http://localhost:9200'], timeout=60, max_retries=10, retry_on_timeout=True)
 
